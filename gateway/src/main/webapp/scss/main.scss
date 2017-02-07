@@ -1,6 +1,11 @@
+// @import url(https://fonts.googleapis.com/css?family=Roboto:300,400,600,700,300italic,400italic,600italic);
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,400i');
+
+
 body {
     background: #fafafa;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     color: #333;
 }
 
@@ -341,5 +346,55 @@ ui bootstrap tweaks
     outline: none;
 }
 
+/* ==========================================================================
+Footer
+========================================================================== */
+.wrapper .no-sidebar {
+  .main-footer {
+    background-color: #242d37;
+    color: #fafafa;
+    margin: auto;
+    border: 0px;
+  }
+}
+
+/*===========================================================================
+Dashboard
+===========================================================================*/
+.navbar .navbar-nav > li > a {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.wrapper .main-sidebar {
+  background-color: #fff;
+
+  .sidebar-menu > li > .treeview-menu {
+    background-color: #fff;
+  }
+}
+
+.sidebar {
+  background-color: #fff;
+  .sidebar-form {
+    background-color: #ffffff;
+    border-color: transparent;
+    margin: 0px;
+    .btn {
+      color: #999;
+    }
+  }
+}
+
+#order-state-tabs {
+  margin-bottom: 15px;
+}
+
+/* ==========================================================================
+Fix error field display
+========================================================================== */
+.form-group .help-block {
+    position: static;
+}
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
