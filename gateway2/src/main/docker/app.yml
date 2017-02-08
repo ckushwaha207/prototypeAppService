@@ -1,0 +1,63 @@
+#-------------------------------------------------------------------------------
+# Note for using the rate-limiting:
+#   The comment part won't be copied if you use the subgenerator docker-compose
+#   you have to manually copy it
+#-------------------------------------------------------------------------------
+version: '2'
+services:
+    gateway2-app:
+        image: gateway2
+        external_links:
+            - gateway2-mysql:mysql
+            # Uncomment to have Cassandra working with the gateway
+            # - gateway2-cassandra:cassandra
+            - gateway2-elasticsearch:elasticsearch
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_CLOUD_CONSUL_HOST=consul
+            - SPRING_CLOUD_CONSUL_PORT=8500
+            - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/gateway2?useUnicode=true&characterEncoding=utf8&useSSL=false
+            - SPRING_DATA_CASSANDRA_CONTACTPOINTS=cassandra
+            - JHIPSTER_SLEEP=80 # gives time for uaa and the Cassandra cluster to start and execute the migration scripts
+            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=elasticsearch:9300
+        ports:
+            - 8080:8080
+    gateway2-mysql:
+        extends:
+            file: mysql.yml
+            service: gateway2-mysql
+    # Uncomment to have Cassandra working with the gateway
+    # gateway2-cassandra:
+    #     extends:
+    #         file: cassandra-cluster.yml
+    #         service: gateway2-cassandra
+    # gateway2-cassandra-migration:
+    #     extends:
+    #         file: cassandra-migration.yml
+    #         service: gateway2-cassandra-migration
+    #     environment:
+    #         - CREATE_KEYSPACE_SCRIPT=create-keyspace-prod.cql
+    gateway2-elasticsearch:
+        extends:
+            file: elasticsearch.yml
+            service: gateway2-elasticsearch
+    consul:
+        image: consul:0.7.2
+        command: consul agent -dev -ui -client 0.0.0.0
+        ports:
+            - 8300:8300
+            - 8500:8500
+            - 8600:8600
+
+    consul-config-loader:
+        image: jhipster/consul-config-loader:v0.2.1
+        volumes:
+            - ./central-server-config:/config
+        environment:
+            - INIT_SLEEP_SECONDS=5
+            - CONSUL_URL=consul
+            - CONSUL_PORT=8500
+        # Uncomment to load configuration into Consul from a git repository
+        # as configured in central-server-config/git2consul.json
+        # Also set SPRING_CLOUD_CONSUL_CONFIG_FORMAT=files on your apps
+        #    - CONFIG_MODE=git
