@@ -1,0 +1,16 @@
+.idea
+.gitignore
+.idea/compiler.xml
+.idea/copyright/
+.idea/misc.xml
+.idea/modules.xml
+.idea/prototypeApp.iml
+.idea/vcs.xml
+.idea/workspace.xml
+gateway2/src/test/features/
+gateway2/src/test/gatling/bodies/
+gateway2/src/test/gatling/data/
+gateway2/src/test/gatling/simulations/
+uaa/src/test/gatling/bodies/
+uaa/src/test/gatling/data/
+uaa/src/test/gatling/simulations/
